@@ -1,8 +1,10 @@
 import express from 'npm:express@4.18.2'
 import { distance } from 'npm:fastest-levenshtein@1.0.16'
+import cors from 'npm:cors@2.8.5'
 import data from './cities.json' assert { type: 'json' }
 
-const PORT = Deno.env.get('PORT') || 8000
+const PORT = Deno.env.get('PORT') ?? 8000
+const CORS = Deno.env.get('CORS') ?? false
 
 type City = {
     country: string
@@ -14,6 +16,8 @@ type City = {
 const cities = data as Array<City>
 
 const app = express()
+
+if (CORS) app.use(cors())
 
 const clean = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
