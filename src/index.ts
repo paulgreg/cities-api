@@ -30,6 +30,7 @@ app.get('/suggest/', (req, res) => {
                 (cityA, cityB) =>
                     distance(cityA.name, term) - distance(cityB.name, term)
             )
+            .slice(0, 5)
         res.json(candidates)
     }
 })
